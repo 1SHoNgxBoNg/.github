@@ -8,9 +8,13 @@
 
 ## Stack:
 
-- **Bot:** bot created with [discord.js](https://github.com/discordjs/discord.js).
+- **Main Bot:** The basic bot that contains the most important private systems.
+- **Log Bot:** Save all events in the server and send them to their channels.
+- **Template Bot:** Basic handler Basic rest of the bots.
 
+- 
 **Common:** 
+- We use [discord.js](https://github.com/discordjs/discord.js) for user discord api.
 - We use [MongoDB](https://www.mongodb.com/) for relational data.
 - We use [Redis](https://redis.io) for caching.
 - We use [Sentry](https://sentry.io/) for organize the bot errors and fix them.

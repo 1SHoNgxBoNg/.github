@@ -14,11 +14,12 @@
 - **[ShongTemplate:](https://github.com/1SHoNgxBoNg/ShongTemplate)** Basic handler Basic rest of the bots.
 
 **Common:** 
-- We use [discord.js](https://github.com/discordjs/discord.js) for user discord api.
-- We use [MongoDB](https://www.mongodb.com/) for relational data.
-- We use [Redis](https://redis.io) for caching.
-- We use [Sentry](https://sentry.io/) for organize the bot errors and fix them.
-- We use [Typescript](https://www.typescriptlang.org/) as our main Language.
+- We use [Discord.js](https://github.com/discordjs/discord.js) The library we use to connect projects to Discord.
+- We use [MongoDB](https://www.mongodb.com/) All project data is saved in MongoDB.
+- We use [Redis](https://redis.io) To control the projects caching, it is used.
+- We use [Sentry](https://sentry.io/) To organize, filter and resolve project errors.
+- We use [Typescript](https://www.typescriptlang.org/) The main language for all our projects..
+- We use [NestJs](https://www.nestjs.com/) The framework used in the API and this project is a powerful assistant for our projects.
 
 **Developers:**
 - [github.com/ShkourBashtawi](https://github.com/ShkourBashtawi)

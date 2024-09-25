@@ -30,4 +30,4 @@ Released under the [MIT License](https://choosealicense.com/licenses/mit) licens
 
 ## Donate:
 
-You can donate Onix and make it stronger than ever [by clicking here](https://paypal.me/shkour)!
+You can donate us and make it stronger than ever [by clicking here](https://paypal.me/shkour)!

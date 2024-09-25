@@ -21,7 +21,7 @@
 - We use [Typescript](https://www.typescriptlang.org/) as our main Language.
 
 **Developers:**
-- [github.com/AhmadShkour71](https://github.com/AhmadShkour71)
+- [github.com/AhmadShkour71](https://github.com/ShkourBashtawi)
 - [github.com/ArrioProgrammer](https://github.com/ArrioProgrammer)
 
 ## License:

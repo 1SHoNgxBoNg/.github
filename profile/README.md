@@ -8,9 +8,10 @@
 
 ## Stack:
 
-- **Main Bot:** The basic bot that contains the most important private systems.
-- **Log Bot:** Save all events in the server and send them to their channels.
-- **Template Bot:** Basic handler Basic rest of the bots.
+- **[SXB BOT:](https://github.com/1SHoNgxBoNg/Bot)** The basic bot that contains the most important private systems.
+- **[ShongLogix:](https://github.com/1SHoNgxBoNg/ShongLogix)** Save all events in the server and send them to their channels.
+- **[SongAPI:](https://github.com/1SHoNgxBoNg/ShongAPI)** API to serve the main bot and help other bots perform the required tasks.
+- **[Template Bot:](https://github.com/1SHoNgxBoNg/Template-Bot)** Basic handler Basic rest of the bots.
 
 **Common:** 
 - We use [discord.js](https://github.com/discordjs/discord.js) for user discord api.

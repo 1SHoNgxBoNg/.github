@@ -11,6 +11,7 @@
 - **[ShongBot:](https://github.com/1SHoNgxBoNg/ShongBot)** The basic bot that contains the most important private systems.
 - **[ShongLogix:](https://github.com/1SHoNgxBoNg/ShongLogix)** Save all events in the server and send them to their channels.
 - **[SongAPI:](https://github.com/1SHoNgxBoNg/ShongAPI)** API to serve the main bot and help other bots perform the required tasks.
+- **[ShongGamesData:](https://github.com/1SHoNgxBoNg/ShongGamesData)** A project containing files related to the games in the bot.
 - **[ShongTemplate:](https://github.com/1SHoNgxBoNg/ShongTemplate)** Basic handler Basic rest of the bots.
 
 **Common:** 

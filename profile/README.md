@@ -19,7 +19,7 @@
 - We use [MongoDB](https://www.mongodb.com/) All project data is saved in MongoDB.
 - We use [Redis](https://redis.io) To control the projects caching, it is used.
 - We use [Sentry](https://sentry.io/) To organize, filter and resolve project errors.
-- We use [Typescript](https://www.typescriptlang.org/) The main language for all our projects..
+- We use [Typescript](https://www.typescriptlang.org/) The main language for all our projects.
 - We use [NestJs](https://www.nestjs.com/) The framework used in the API and this project is a powerful assistant for our projects.
 
 **Developers:**

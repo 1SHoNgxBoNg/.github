@@ -1,35 +1,67 @@
 <h1 align="center">
   <br>
+  <img src="https://avatars.githubusercontent.com/u/162030730?s=200&v=4" alt="SHoNgxBoNg Logo">
+  <br>
   Welcome to the SHoNgxBoNg project
- <br>
+  <br>
 </h1>
 
 <h3 align=center>SHoNgxBoNg is a fully functional private server Discord bot with many commands. Moderation, general, large setup, and server-specific systems.</h3>
 
-## Stack:
+## Table of Contents
+- [Features](#features)
+- [Acknowledgments](#acknowledgments)
+- [Stack](#stack)
+- [Developers](#developers)
+- [Support](#support)
+- [Donate](#donate)
+- [License](#license)
 
-- **[ShongBot:](https://github.com/1SHoNgxBoNg/ShongBot)** The basic bot that contains the most important private systems.
-- **[ShongLogix:](https://github.com/1SHoNgxBoNg/ShongLogix)** Save all events in the server and send them to their channels.
-- **[ShongAPI:](https://github.com/1SHoNgxBoNg/ShongAPI)** API to serve the main bot and help other bots perform the required tasks.
-- **[ShongGamesData:](https://github.com/1SHoNgxBoNg/ShongGamesData)** A project containing files related to the games in the bot.
-- **[ShongTemplate:](https://github.com/1SHoNgxBoNg/ShongTemplate)** Basic handler Basic rest of the bots.
 
-**Common:** 
-- We use [Discord.js](https://github.com/discordjs/discord.js) The library we use to connect projects to Discord.
-- We use [MongoDB](https://www.mongodb.com/) All project data is saved in MongoDB.
-- We use [Redis](https://redis.io) To control the projects caching, it is used.
-- We use [Sentry](https://sentry.io/) To organize, filter and resolve project errors.
-- We use [Typescript](https://www.typescriptlang.org/) The main language for all our projects.
-- We use [NestJs](https://www.nestjs.com/) The framework used in the API and this project is a powerful assistant for our projects.
+## Features
 
-**Developers:**
+- **Moderation Commands:** Manage server with powerful moderation tools.
+- **General Commands:** Fun and utility commands for everyday use.
+- **Server Specific Systems:** Custom systems tailored for server.
+- **Event Logging:** Comprehensive logging of all server events.
+- **Game Integration:** Interactive games and data management.
+
+
+## Acknowledgments
+
+- [Discord.js](https://github.com/discordjs/discord.js) for the powerful Discord API library.
+- [MongoDB](https://www.mongodb.com/) for the reliable database solution.
+- [Redis](https://redis.io) for efficient caching.
+- [Sentry](https://sentry.io/) for error tracking and monitoring.
+- [Typescript](https://www.typescriptlang.org/) for the robust programming language.
+- [NestJs](https://www.nestjs.com/) for the powerful framework.
+
+## Stack
+
+- [SHoNgBot:](https://github.com/1SHoNgxBoNg/ShongBot) The basic bot that contains the most important private systems.
+- [SHoNgLogix:](https://github.com/1SHoNgxBoNg/ShongLogix) Save all events in the server and send them to their channels.
+- [SHoNgAPI:](https://github.com/1SHoNgxBoNg/ShongAPI) API to serve the main bot and help other bots perform the required tasks.
+- [SHoNgGamesData:](https://github.com/1SHoNgxBoNg/ShongGamesData) A project containing files related to the games in the bot.
+- [SHoNgTemplate:](https://github.com/1SHoNgxBoNg/ShongTemplate) Basic handler Basic rest of the bots.
+
+## Developers
 - [github.com/ShkourBashtawi](https://github.com/ShkourBashtawi)
 - [github.com/ArrioProgrammer](https://github.com/ArrioProgrammer)
 
-## License:
+## Support
+If you need any help or have any questions, feel free to open an issue on GitHub or join our [Discord server](https://discord.gg/sxb).
 
-Released under the [MIT License](https://choosealicense.com/licenses/mit) license.
+## Donate
 
-## Donate:
+If you find this project useful, consider supporting us by making a donation. Your contributions help us maintain and improve the project.
 
-You can donate us and make it stronger than ever [by clicking here](https://paypal.me/shkour)!
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](https://choosealicense.com/licenses/mit) file for details.
+
+[![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://paypal.me/shkour)
+
+![GitHub stars](https://img.shields.io/github/stars/1SHoNgxBoNg/ShongBot?style=social)
+![GitHub forks](https://img.shields.io/github/forks/1SHoNgxBoNg/ShongBot?style=social)
+![GitHub issues](https://img.shields.io/github/issues/1SHoNgxBoNg/ShongBot)
+![GitHub license](https://img.shields.io/github/license/1SHoNgxBoNg/ShongBot)

@@ -39,6 +39,7 @@
 ## Stack
 
 - [SHoNgBot:](https://github.com/1SHoNgxBoNg/ShongBot) The basic bot that contains the most important private systems.
+- [SHoNgBotV4:](https://github.com/1SHoNgxBoNg/SHoNgBotV4) A complete rewrite of [SHoNgBot](https://github.com/1SHoNgxBoNg/ShongBot) with new improvements, better performance, and enhanced features.
 - [SHoNgLogix:](https://github.com/1SHoNgxBoNg/ShongLogix) Save all events in the server and send them to their channels.
 - [SHoNgAPI:](https://github.com/1SHoNgxBoNg/ShongAPI) API to serve the main bot and help other bots perform the required tasks.
 - [SHoNgGamesData:](https://github.com/1SHoNgxBoNg/ShongGamesData) A project containing files related to the games in the bot.

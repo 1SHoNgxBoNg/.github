@@ -63,7 +63,4 @@ This project is licensed under the MIT License - see the [LICENSE](https://choos
 
 [![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://paypal.me/shkour)
 
-![GitHub stars](https://img.shields.io/github/stars/1SHoNgxBoNg/ShongBot?style=social)
-![GitHub forks](https://img.shields.io/github/forks/1SHoNgxBoNg/ShongBot?style=social)
-![GitHub issues](https://img.shields.io/github/issues/1SHoNgxBoNg/ShongBot)
-![GitHub license](https://img.shields.io/github/license/1SHoNgxBoNg/ShongBot)
+![GitHub Stars](https://img.shields.io/github/followers/1SHoNgxBoNg?style=social)

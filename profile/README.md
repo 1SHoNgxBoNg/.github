@@ -1,7 +1,5 @@
 <h1 align="center">
   <br>
-  <img src="https://avatars.githubusercontent.com/u/162030730?s=200&v=4" alt="SHoNgxBoNg Logo">
-  <br>
   Welcome to the SHoNgxBoNg project
   <br>
 </h1>

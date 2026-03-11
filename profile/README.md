@@ -33,9 +33,12 @@
 - [Sentry](https://sentry.io/) for error tracking and monitoring.
 - [Typescript](https://www.typescriptlang.org/) for the robust programming language.
 - [NestJs](https://www.nestjs.com/) for the powerful framework.
+- [Next.js](https://nextjs.org/) for the powerful React framework with App Router.
+- [Tailwind CSS](https://tailwindcss.com/) for the utility-first CSS framework.
 
 ## Stack
 
+- [SHoNgDashboard:](https://github.com/1SHoNgxBoNg/SHoNgDashboard) A comprehensive dashboard for control database for managing the bot.
 - [SHoNgAPI:](https://github.com/1SHoNgxBoNg/ShongAPI) API to serve the main bot and help other bots perform the required tasks.
 - [SHoNgBotV4:](https://github.com/1SHoNgxBoNg/SHoNgBotV4) A complete rewrite of [SHoNgBot](https://github.com/1SHoNgxBoNg/ShongBot) with new improvements, better performance, and enhanced features.
 - [SHoNgLogix:](https://github.com/1SHoNgxBoNg/ShongLogix) Save all events in the server and send them to their channels.

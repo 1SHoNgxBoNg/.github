@@ -40,7 +40,7 @@
 
 - [SHoNgDashboard:](https://github.com/1SHoNgxBoNg/SHoNgDashboard) A comprehensive dashboard for control database for managing the bot.
 - [SHoNgAPI:](https://github.com/1SHoNgxBoNg/ShongAPI) API to serve the main bot and help other bots perform the required tasks.
-- [SHoNgBotV4:](https://github.com/1SHoNgxBoNg/SHoNgBotV4) A complete rewrite of [SHoNgBot](https://github.com/1SHoNgxBoNg/ShongBot) with new improvements, better performance, and enhanced features.
+- [SHoNgBotV4:](https://github.com/1SHoNgxBoNg/SHoNgBotV4) Advanced private system bot engineered for performance, scalability, and full control.
 - [SHoNgLogix:](https://github.com/1SHoNgxBoNg/ShongLogix) Save all events in the server and send them to their channels.
 - [SHoNgArena:](https://github.com/1SHoNgxBoNg/ShongArena) Easily create and manage games and events within server.
 - [SHoNgArenaData:](https://github.com/1SHoNgxBoNg/ShongArenaData) A project containing files related to the SHoNgArena bot.

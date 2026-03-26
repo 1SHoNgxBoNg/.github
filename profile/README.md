@@ -45,7 +45,6 @@
 - [SHoNgArena:](https://github.com/1SHoNgxBoNg/ShongArena) Easily create and manage games and events within server.
 - [SHoNgArenaData:](https://github.com/1SHoNgxBoNg/ShongArenaData) A project containing files related to the SHoNgArena bot.
 - [SHoNgTemplate:](https://github.com/1SHoNgxBoNg/ShongTemplate) Basic handler Basic rest of the bots.
-- [SHoNgBot:](https://github.com/1SHoNgxBoNg/ShongBot) The basic bot that contains the most important private systems.
 
 ## Developers
 - [github.com/ShkourBashtawi](https://github.com/ShkourBashtawi)

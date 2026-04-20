@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="https://capsule-render.vercel.app/api?type=waving&color=5865F2&height=200&section=header&text=SHoNgxBoNg&fontSize=80&fontColor=ffffff&animation=fadeIn&fontAlignY=38&desc=Advanced%20Private%20Discord%20Bot%20Ecosystem&descAlignY=60&descAlign=50" />
+<img src="https://capsule-render.vercel.app/api?type=waving&color=9a160e&height=200&section=header&text=SHoNgxBoNg&fontSize=80&fontColor=ffffff&animation=fadeIn&fontAlignY=38&desc=Advanced%20Private%20Discord%20Bot%20Ecosystem&descAlignY=60&descAlign=50" />
 
 <br/>
 

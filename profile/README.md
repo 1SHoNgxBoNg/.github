@@ -22,6 +22,7 @@
 
 - [✨ Features](#-features)
 - [🏗️ Stack](#️-stack)
+- [⚡ Ecosystem System Architecture Workflow](#-ecosystem-system-architecture-workflow)
 - [⚙️ Tech & Acknowledgments](#️-tech--acknowledgments)
 - [👥 Developers](#-developers)
 - [🤝 Support](#-support)
@@ -84,6 +85,66 @@ The SHoNgxBoNg ecosystem is composed of several specialized services working tog
     </tr>
   </tbody>
 </table>
+
+---
+
+## ⚡ Ecosystem System Architecture Workflow
+
+A high-level overview of how all services, bots, and data layers interconnect across the SHoNgxBoNg ecosystem.
+
+```mermaid
+flowchart TD
+    %% Users & Inputs
+    DiscordUsers[Discord Server Members] <--> |Gateway Interactions & Commands| Bots[Discord Bot Clients]
+    WebAdmins[Server Administrators] <--> |HTTPS UI / Next.js| Dashboard[SHoNgDashboard / Next.js Admin Portal]
+    Webhooks[Payment Platforms / Kofi & Patreon] --> |JSON Webhooks| WebhookReceiver[Webhooks & API Endpoint Receivers]
+    %% Dashboard App
+    subgraph DashboardApp [SHoNgDashboard: Next.js Admin Web App]
+        Dashboard --> |Supabase SSR Auth| SupabaseAuth[Supabase Auth / SSR]
+        Dashboard --> |MongoDB Node Driver| MongoDashboard[MongoDB Driver]
+        Dashboard --> |Resend / Nodemailer| Resend[Nodemailer / SMTP Alerts]
+    end
+    %% Webhook Receiver Routing
+    WebhookReceiver --> |Ko-fi / Patreon Payloads| SHoNgAPI[SHoNgAPI / NestJS Microservice]
+    WebhookReceiver --> |Role Sync & Expire Events| FastifyV4[SHoNgBotV4 / Fastify Web Server]
+    %% Bot Clients
+    subgraph Bots [Discord Bot Ecosystem Client Layer]
+        SHoNgBotV4[🤖 SHoNgBotV4 - Main Systems Bot]
+        SHoNgArena[🎮 SHoNgArena - Visual Interface Bot]
+        SHoNgLogix[📝 SHoNgLogix - Event Auditor & SQL Console]
+    end
+    %% Bot Internal Engine Details
+    SHoNgBotV4 --> |Dynamic Temp Voice / Islamic Crons / Staff Shifts / Tickets| BotV4Core[BotV4 Engine]
+    SHoNgArena --> |QuickChart-js / Local Canvas / Command Route| ArenaCore[Arena Engine]
+    SHoNgLogix --> |Gateway Audits / SQL Terminal / AI Skills| LogixCore[Logix Engine]
+    %% NestJS API
+    subgraph APIService [SHoNgAPI: NestJS Backend Microservice]
+        SHoNgAPI --> |Fastify Adapter| APIFastify[Fastify Server]
+        SHoNgAPI --> |Rust @napi-rs/canvas & sharp| RenderEngine[Graphics Rendering Engine]
+        SHoNgAPI --> |Cache Manager| APICache[In-Memory Cache]
+    end
+    %% Integrations Between Components
+    SHoNgBotV4 <--> |REST API Requests / Render Card Triggers| SHoNgAPI
+    SHoNgArena <--> |Fetch Rendered Profile & Stats Cards| SHoNgAPI
+    Dashboard <--> |Request Transcripts / Web API| FastifyV4
+    %% Shared Databases
+    subgraph Databases [Shared Data Storage Layer]
+        MongoDB[(MongoDB Atlas - Schemaless Docs)]
+        PostgreSQL[(PostgreSQL / Supabase Relational)]
+        Redis[(Redis Cache - Ephemeral / States)]
+    end
+    %% Database Connections
+    MongoDashboard <--> MongoDB
+    BotV4Core <--> MongoDB
+    BotV4Core <--> |Prisma ORM / Supabase Batcher| PostgreSQL
+    BotV4Core <--> Redis
+    ArenaCore <--> MongoDB
+    ArenaCore <--> Redis
+    LogixCore <--> MongoDB
+    LogixCore <--> |Prisma ORM / pg pool| PostgreSQL
+    SHoNgAPI <--> MongoDB
+    SHoNgAPI <--> Redis
+```
 
 ---
 

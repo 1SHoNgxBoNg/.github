@@ -224,8 +224,6 @@ These features include:
 
 SHoNgArena does not use Message Content to perform general monitoring of all server messages.
 
-The Application does not currently use OCR, attachment scanning, or automated analysis of user-uploaded Discord images or files.
-
 The Application does not currently process Discord direct messages as part of its normal content-processing workflows.
 
 The bot may send direct messages to users for notifications, links, or feature-related communication where applicable.

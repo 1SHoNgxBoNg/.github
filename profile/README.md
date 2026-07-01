@@ -204,6 +204,12 @@ If you find this project useful and would like to support its continued developm
 
 ---
 
+## 🔒 Privacy Policy
+
+[SHoNgArena Privacy Policy](https://github.com/1SHoNgxBoNg/.github/blob/main/profile/arena_privacy.md)
+
+---
+
 ## 📄 License
 
 This project is licensed under the **MIT License**.

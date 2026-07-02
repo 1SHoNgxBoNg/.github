@@ -64,7 +64,7 @@ The SHoNgxBoNg ecosystem is composed of several specialized services working tog
       <td>Core API that serves the main bot and enables inter-bot communication</td>
     </tr>
     <tr>
-      <td><a href="https://github.com/1SHoNgxBoNg/SHoNgBotV4"><b>🤖 SHoNgBotV4</b></a></td>
+      <td><a href="https://github.com/1SHoNgxBoNg/SHoNgBotV4"><b>🤖 SHoNgBot</b></a></td>
       <td>Advanced private system bot engineered for performance, scalability, and full control</td>
     </tr>
     <tr>
@@ -97,72 +97,102 @@ A high-level overview of how all services, bots, and data layers interconnect ac
 
 ```mermaid
 flowchart TD
-    %% Users & Inputs
-    DiscordUsers[Discord Server Members] <--> |Gateway Interactions & Commands| Bots[Discord Bot Clients]
-    WebAdmins[Server Administrators] <--> |HTTPS UI / Next.js| Dashboard[SHoNgDashboard / Next.js Admin Portal]
-    Webhooks[Payment Platforms / Kofi & Patreon] --> |JSON Webhooks| WebhookReceiver[Webhooks & API Endpoint Receivers]
-    
+    %% External Actors
+    DiscordUsers[Discord Server Members]
+    WebAdmins[Server Administrators]
+    Webhooks[Payment Platforms / Kofi & Patreon]
+    WebhookReceiver[Webhooks & API Endpoint Receivers]
+
     %% Dashboard App
     subgraph DashboardApp [SHoNgDashboard: Next.js Admin Web App]
-        Dashboard --> |Supabase SSR Auth| SupabaseAuth[Supabase Auth / SSR]
-        Dashboard --> |MongoDB Node Driver| MongoDashboard[MongoDB Driver]
-        Dashboard --> |Resend / Nodemailer| Resend[Nodemailer / SMTP Alerts]
+        Dashboard[SHoNgDashboard / Next.js Admin Portal]
+        SupabaseAuth[Supabase Auth / SSR]
+        MongoDashboard[MongoDB Driver]
+        Resend[Nodemailer / SMTP Alerts]
+
+        Dashboard --> |Supabase SSR Auth| SupabaseAuth
+        Dashboard --> |MongoDB Node Driver| MongoDashboard
+        Dashboard --> |Resend / Nodemailer| Resend
     end
-    
-    %% Webhook Receiver Routing
-    WebhookReceiver --> |Ko-fi / Patreon Payloads| SHoNgAPI[SHoNgAPI / NestJS Microservice]
-    WebhookReceiver --> |Role Sync & Expire Events| FastifyV4[SHoNgBotV4 / Fastify Web Server]
-    
+
     %% Bot Clients
     subgraph Bots [Discord Bot Ecosystem Client Layer]
-        SHoNgBotV4[🤖 SHoNgBotV4 - Main Systems Bot]
-        SHoNgArena[🎮 SHoNgArena - Visual Interface Bot]
-        SHoNgLogix[📝 SHoNgLogix - Event Auditor & SQL Console]
+        direction LR
+
+        subgraph BotV4Group [SHoNgBotV4]
+            SHoNgBotV4[🤖 SHoNgBotV4 - Main Systems Bot]
+            BotV4Core[BotV4 Engine]
+            FastifyV4[SHoNgBotV4 / Fastify Web Server]
+            SHoNgBotV4 --> |Dynamic Temp Voice / Islamic Crons / Staff Shifts / Tickets| BotV4Core
+        end
+
+        subgraph ArenaGroup [SHoNgArena]
+            SHoNgArena[🎮 SHoNgArena - Visual Interface Bot]
+            ArenaCore[Arena Engine]
+            SHoNgArena --> |QuickChart-js / Local Canvas / Command Route| ArenaCore
+        end
+
+        subgraph LogixGroup [SHoNgLogix]
+            SHoNgLogix[📝 SHoNgLogix - Event Auditor & SQL Console]
+            LogixCore[Logix Engine]
+            SHoNgLogix --> |Gateway Audits / SQL Terminal / AI Skills| LogixCore
+        end
     end
-    
-    %% Bot Internal Engine Details
-    SHoNgBotV4 --> |Dynamic Temp Voice / Islamic Crons / Staff Shifts / Tickets| BotV4Core[BotV4 Engine]
-    SHoNgArena --> |QuickChart-js / Local Canvas / Command Route| ArenaCore[Arena Engine]
-    SHoNgLogix --> |Gateway Audits / SQL Terminal / AI Skills| LogixCore[Logix Engine]
-    
+
     %% NestJS API
     subgraph APIService [SHoNgAPI: NestJS Backend Microservice]
-        SHoNgAPI --> |Fastify Adapter| APIFastify[Fastify Server]
-        SHoNgAPI --> |Rust @napi-rs/canvas & sharp| RenderEngine[Graphics Rendering Engine]
-        SHoNgAPI --> |Cache Manager| APICache[In-Memory Cache]
+        SHoNgAPI[SHoNgAPI / NestJS Microservice]
+        APIFastify[Fastify Server]
+        RenderEngine[Graphics Rendering Engine]
+        APICache[In-Memory Cache]
+
+        SHoNgAPI --> |Fastify Adapter| APIFastify
+        SHoNgAPI --> |Rust @napi-rs/canvas & sharp| RenderEngine
+        SHoNgAPI --> |Cache Manager| APICache
     end
+
     %% Shared Mongoose Database Schemas Package
     SHoNgDatabase[🗄️ SHoNgDatabase Shared Package]
-    
+
+    %% Shared Databases
+    subgraph Databases [Shared Data Storage Layer]
+        direction LR
+        MongoDB[(MongoDB Atlas - Schemaless Docs)]
+        PostgreSQL[(PostgreSQL / Supabase Relational)]
+        Redis[(Redis Cache - Ephemeral / States)]
+    end
+
+    %% Users & Inputs
+    DiscordUsers <--> |Gateway Interactions & Commands| Bots
+    WebAdmins <--> |HTTPS UI / Next.js| Dashboard
+    Webhooks --> |JSON Webhooks| WebhookReceiver
+
+    %% Webhook Receiver Routing
+    WebhookReceiver --> |Ko-fi / Patreon Payloads| SHoNgAPI
+    WebhookReceiver --> |Role Sync & Expire Events| FastifyV4
+
+    %% Integrations Between Components
+    SHoNgBotV4 <--> |REST API Requests / Render Card Triggers| SHoNgAPI
+    SHoNgArena <--> |Fetch Rendered Profile & Stats Cards| SHoNgAPI
+    Dashboard <--> |Request Transcripts / Web API| FastifyV4
+
     %% Package Dependency Links
     MongoDashboard -.-> |Imports Models & Types| SHoNgDatabase
     BotV4Core -.-> |Imports Models & Types| SHoNgDatabase
     ArenaCore -.-> |Imports Models & Types| SHoNgDatabase
     LogixCore -.-> |Imports Models & Types| SHoNgDatabase
     SHoNgAPI -.-> |Imports Models & Types| SHoNgDatabase
-    
-    %% Integrations Between Components
-    SHoNgBotV4 <--> |REST API Requests / Render Card Triggers| SHoNgAPI
-    SHoNgArena <--> |Fetch Rendered Profile & Stats Cards| SHoNgAPI
-    Dashboard <--> |Request Transcripts / Web API| FastifyV4
-    
-    %% Shared Databases
-    subgraph Databases [Shared Data Storage Layer]
-        MongoDB[(MongoDB Atlas - Schemaless Docs)]
-        PostgreSQL[(PostgreSQL / Supabase Relational)]
-        Redis[(Redis Cache - Ephemeral / States)]
-    end
-    
+
     %% Database Connections
     SHoNgDatabase --> |Defines Document Schemas| MongoDB
+    LogixCore <--> MongoDB
+    SHoNgAPI <--> MongoDB
+
     BotV4Core <--> |Prisma ORM / Supabase Batcher| PostgreSQL
+    LogixCore <--> |Prisma ORM / pg pool| PostgreSQL
+
     BotV4Core <--> Redis
     ArenaCore <--> Redis
-    LogixCore <--> |Prisma ORM / pg pool| PostgreSQL
-    SHoNgAPI <--> Redis
-    LogixCore <--> MongoDB
-    LogixCore <--> |Prisma ORM / pg pool| PostgreSQL
-    SHoNgAPI <--> MongoDB
     SHoNgAPI <--> Redis
 ```
 

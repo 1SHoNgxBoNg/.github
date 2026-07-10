@@ -1,18 +1,18 @@
-# SHoNgBot V4 Privacy Policy
+# SHoNgBot Privacy Policy
 
 **Last updated:** July 10, 2026
 
-SHoNgBot V4 (“SHoNgBot”, “the Bot”, “the Application”, “we”, “us”, or “our”) is a Discord bot used for community management, tickets, temporary voice rooms, subscriptions, activity systems, rewards, staff tools, moderation support, and server automation.
+SHoNgBot (“SHoNgBot”, “the Bot”, “the Application”, “we”, “us”, or “our”) is a Discord bot used for community management, tickets, temporary voice rooms, subscriptions, activity systems, rewards, staff tools, moderation support, and server automation.
 
-This Privacy Policy explains what Discord-related data SHoNgBot V4 processes, why it is processed, where it may be stored, and how users can contact us regarding privacy-related requests.
+This Privacy Policy explains what Discord-related data SHoNgBot processes, why it is processed, where it may be stored, and how users can contact us regarding privacy-related requests.
 
-This policy applies only to SHoNgBot V4 and its related systems. It does not replace the privacy policies of Discord, Ko-fi, Patreon, or any other third-party services used with the Bot.
+This policy applies only to SHoNgBot and its related systems. It does not replace the privacy policies of Discord, Ko-fi, Patreon, or any other third-party services used with the Bot.
 
 ---
 
 ## 1. Scope
 
-This Privacy Policy applies to SHoNgBot V4 and its related services, including:
+This Privacy Policy applies to SHoNgBot and its related services, including:
 
 - Discord bot features
 - Ticket systems
@@ -25,13 +25,13 @@ This Privacy Policy applies to SHoNgBot V4 and its related services, including:
 - Logs and monitoring tools
 - External services used to operate bot features
 
-By using SHoNgBot V4 or interacting with its features in a Discord server, you acknowledge that limited Discord-related data may be processed as described in this policy.
+By using SHoNgBot or interacting with its features in a Discord server, you acknowledge that limited Discord-related data may be processed as described in this policy.
 
 ---
 
 ## 2. Data We Collect and Process
 
-Depending on the features used, SHoNgBot V4 may collect, receive, store, or process the following categories of data.
+Depending on the features used, SHoNgBot may collect, receive, store, or process the following categories of data.
 
 ### Discord account and server data
 
@@ -127,7 +127,7 @@ If Ko-fi, Patreon, or supporter-related features are enabled, the Bot may proces
 - Custom keyword settings
 - Supporter-only feature settings
 
-SHoNgBot V4 does not collect full payment-card details. Payment processing is handled by external providers such as Ko-fi or Patreon. The Bot only processes the data needed to verify and manage supporter features.
+SHoNgBot does not collect full payment-card details. Payment processing is handled by external providers such as Ko-fi or Patreon. The Bot only processes the data needed to verify and manage supporter features.
 
 ---
 
@@ -190,7 +190,7 @@ This data is used to keep the Bot stable, secure, and resistant to misuse.
 
 ## 3. How We Use Data
 
-SHoNgBot V4 uses data only as necessary to operate its features and protect the community.
+SHoNgBot uses data only as necessary to operate its features and protect the community.
 
 Data may be used to:
 
@@ -219,7 +219,7 @@ We do not use Discord user data for advertising or unrelated marketing.
 
 ## 4. Discord Permissions and Privileged Intents
 
-SHoNgBot V4 may require Discord permissions and Gateway Intents to operate its features.
+SHoNgBot may require Discord permissions and Gateway Intents to operate its features.
 
 Depending on enabled features, the Bot may need to:
 
@@ -242,7 +242,7 @@ The Bot uses these permissions only to perform configured features, enforce serv
 
 ### Server Members Intent
 
-SHoNgBot V4 may use member data to:
+SHoNgBot may use member data to:
 
 - Verify whether a user is still in the server
 - Check user roles and permissions
@@ -257,7 +257,7 @@ SHoNgBot V4 may use member data to:
 
 ### Message Content Intent
 
-SHoNgBot V4 may process message content only where required for enabled features.
+SHoNgBot may process message content only where required for enabled features.
 
 Examples may include:
 
@@ -278,7 +278,7 @@ Where possible, features may use Discord interactions, slash commands, buttons, 
 
 ## 5. Third-Party Services and Off-Platform Storage
 
-SHoNgBot V4 may use external or off-platform services required to operate its features, including:
+SHoNgBot may use external or off-platform services required to operate its features, including:
 
 - Discord
 - MongoDB
@@ -366,7 +366,7 @@ Please open a support ticket or contact a server administrator.
 
 ## 8. AI, OCR, and Automated Processing
 
-SHoNgBot V4 does not use Discord user data, message content, ticket transcripts, or attachments to train machine-learning models, generative AI models, or external AI systems.
+SHoNgBot does not use Discord user data, message content, ticket transcripts, or attachments to train machine-learning models, generative AI models, or external AI systems.
 
 If automated rules, spam checks, moderation checks, or risk scoring are used, they are used only to operate the Bot, protect the server, enforce rules, or prevent abuse.
 
@@ -376,7 +376,7 @@ If OCR, AI, or external content-analysis features are added in the future, this 
 
 ## 9. Security
 
-SHoNgBot V4 uses databases, cache systems, and hosting infrastructure to operate its services.
+SHoNgBot uses databases, cache systems, and hosting infrastructure to operate its services.
 
 Sensitive credentials may include:
 
@@ -403,7 +403,7 @@ Users should avoid sharing passwords, authentication codes, private financial in
 
 ## 10. Children and Minors
 
-SHoNgBot V4 operates inside Discord and is intended for users who are permitted to use Discord under Discord’s Terms of Service and applicable age requirements.
+SHoNgBot operates inside Discord and is intended for users who are permitted to use Discord under Discord’s Terms of Service and applicable age requirements.
 
 If a user is a minor, they should use Discord and the Bot according to Discord’s rules and any applicable parental or guardian requirements.
 
@@ -422,7 +422,7 @@ This Privacy Policy may be updated when:
 
 The “Last updated” date will be changed when material updates are made.
 
-Continued use of SHoNgBot V4 after changes are published means the updated policy applies.
+Continued use of SHoNgBot after changes are published means the updated policy applies.
 
 ---
 
@@ -438,6 +438,6 @@ Please open a support ticket or contact a server administrator.
 
 ## 13. Discord and Third-Party Policies
 
-SHoNgBot V4 operates through Discord and may interact with third-party services such as Ko-fi, Patreon, Lurkr, database providers, hosting providers, and monitoring tools.
+SHoNgBot operates through Discord and may interact with third-party services such as Ko-fi, Patreon, Lurkr, database providers, hosting providers, and monitoring tools.
 
 Users should also review the privacy policies and terms of service of Discord and any third-party services they use with the Bot.

@@ -257,7 +257,7 @@ If you find this project useful and would like to support its continued developm
 ## 🔒 Privacy Policy
 
 
-[SHoNgxBoNg Bot Privacy Policy](https://github.com/1SHoNgxBoNg/.github/blob/main/profile/sxb_v4.md)
+[SHoNgxBoNg Bot Privacy Policy](https://github.com/1SHoNgxBoNg/.github/blob/main/profile/SHoNgxBoNg_bot.md)
 
 [SHoNgArena Privacy Policy](https://github.com/1SHoNgxBoNg/.github/blob/main/profile/arena_privacy.md)
 

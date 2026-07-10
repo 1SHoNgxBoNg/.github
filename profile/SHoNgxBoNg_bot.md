@@ -366,12 +366,17 @@ Please open a support ticket or contact a server administrator.
 
 ## 8. AI, OCR, and Automated Processing
 
-SHoNgBot does not use Discord user data, message content, ticket transcripts, or attachments to train machine-learning models, generative AI models, or external AI systems.
+SHoNgBot does not use Discord user data, message content, ticket transcripts, attachments, or OCR results to train machine-learning models, generative AI models, or external AI systems.
 
-If automated rules, spam checks, moderation checks, or risk scoring are used, they are used only to operate the Bot, protect the server, enforce rules, or prevent abuse.
+Where enabled, SHoNgBot may use OCR or automated content-processing features for specific moderation, anti-scam, anti-phishing, automation, or server-management workflows.
 
-If OCR, AI, or external content-analysis features are added in the future, this policy should be updated to describe those features clearly.
+This may include processing user-submitted images, attachments, screenshots, or media in configured channels or bot-managed systems to detect scam content, phishing attempts, impersonation, suspicious crypto/gambling promotions, malicious links, or other content that may violate server rules.
 
+OCR and automated processing are used only to operate configured bot features, support moderation, prevent abuse, enforce server rules, protect users, or provide automation requested by server administrators.
+
+OCR results or derived moderation data may be stored only where needed for operational logs, moderation review, abuse prevention, dispute resolution, security investigation, or administrative auditing.
+
+OCR data is not sold, used for advertising, or used to train AI or machine-learning models.
 ---
 
 ## 9. Security

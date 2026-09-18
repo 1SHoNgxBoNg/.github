@@ -106,116 +106,83 @@
 ## ⚡ Architecture
 
 One Discord application holds the privileged intents. Everything else consumes relayed events.
+The system reads top to bottom in four layers: the relay, the bot clients, the services, and the
+shared data layer underneath all of them.
 
 ```mermaid
 flowchart TD
-    %% External actors
-    Members[Discord Server Members]
-    Visitors[Website Visitors]
-    Admins[Server Administrators]
-    Payments[Dodo Payments / Ko-fi / Patreon]
+    %% ─── Ingress ───────────────────────────────────────────────
+    Members["👥 Discord Members"]
+    Web["🌐 Visitors · Members · Operators"]
+    Pay["💳 Dodo Payments · Ko-fi · Patreon"]
 
-    %% The relay
-    subgraph HubLayer [SHoNgHub — Gateway Relay]
-        Hub["SHoNgHub<br/>@discordjs/ws"]
-        HubAPI[Fastify :3200<br/>healthz / metrics / messages]
-        Hub --> HubAPI
+    %% ─── 1. Relay ──────────────────────────────────────────────
+    subgraph Relay ["① Gateway Relay — the one privileged connection"]
+        Hub["📡 SHoNgHub<br/>@discordjs/ws · Fastify :3200"]
+        Streams[("Redis Streams<br/>hub:events:*")]
+        Hub -->|XADD| Streams
     end
 
-    Streams[(Redis Streams<br/>hub:events:*)]
-
-    %% Bot clients
-    subgraph Bots [Discord Bot Clients]
+    %% ─── 2. Bots ───────────────────────────────────────────────
+    subgraph Clients ["② Bot Clients — own tokens · non-privileged intents"]
         direction LR
-        Bot[🤖 SHoNgBot<br/>Fastify :3002]
-        Arena[🎮 SHoNgArena]
-        Logix[📝 SHoNgLogix]
+        Bot["🤖 SHoNgBot<br/>Fastify :3002"]
+        Arena["🎮 SHoNgArena"]
+        Logix["📝 SHoNgLogix"]
     end
 
-    %% API
-    subgraph APILayer [SHoNgAPI — NestJS :5002]
-        API[SHoNgAPI]
-        Render["Rendering Engine<br/>@napi-rs/canvas · sharp · Chart.js"]
-        Control["Control Planes<br/>command permissions · support"]
-        API --> Render
-        API --> Control
-    end
-
-    %% Dashboard
-    subgraph DashLayer [SHoNgDashboard — Next.js 16]
-        Edge["proxy.ts — edge<br/>operator · member · support sessions"]
-        Public["Public Site<br/>bilingual EN / AR"]
-        Account["Member Area<br/>billing · cosmetics · stats"]
-        Dash["Admin Portal<br/>34 pages · RBAC"]
-        Edge --> Public
-        Edge --> Account
-        Edge --> Dash
-    end
-
-    %% Shared package
-    SharedDB["🗄️ @shong/database<br/>Schemas · Cosmetics · Permissions<br/>Arena SQL · GameStats"]
-
-    %% Data stores
-    subgraph Data [Shared Data Layer]
+    %% ─── 3. Services ───────────────────────────────────────────
+    subgraph Services ["③ Services"]
         direction LR
-        Mongo[(MongoDB Atlas)]
-        Postgres[(PostgreSQL / Supabase)]
-        Redis[(Redis)]
+        API["🔌 SHoNgAPI — NestJS :5002<br/>rendering · payments<br/>command permissions · support"]
+        Dash["🖥️ SHoNgDashboard — Next.js 16<br/>public site · member area · admin portal"]
     end
 
-    %% Ingress
-    Members -->|Gateway events| Hub
-    Members <-->|Interactions| Bots
-    Members -->|Discord OAuth| Edge
-    Visitors -->|HTTPS| Edge
-    Admins -->|HTTPS| Edge
-    Payments -->|Webhooks| API
+    %% ─── 4. Data ───────────────────────────────────────────────
+    subgraph Foundation ["④ Shared Data Layer"]
+        Shared["🗄️ @shong/database<br/>schemas · cosmetics · permissions<br/>GameStats · Arena SQL"]
+        Stores[("MongoDB Atlas · PostgreSQL · Redis")]
+        Shared --> Stores
+    end
 
-    %% Relay fan-out
-    Hub -->|XADD| Streams
+    %% ─── Ingress ───
+    Members -->|gateway events| Hub
+    Web -->|HTTPS| Dash
+    Pay -->|webhooks| API
+
+    %% ─── Fan-out ───
     Streams -->|XREADGROUP| Bot
     Streams -->|XREADGROUP| Arena
     Streams -->|XREADGROUP| Logix
+    Hub -.->|message history| Bot
 
-    %% Direct Discord access with own tokens
-    Bots -->|REST · own token| Members
-    Bot -->|Message history| HubAPI
+    %% ─── Bots act directly on Discord ───
+    Clients ==>|REST · own token| Members
 
-    %% Rendering
-    Bot <-->|Card & game renders| API
-    Arena <-->|Card & game renders| API
-    API -->|Stats card push| Bot
+    %% ─── Service traffic ───
+    Bot <-->|renders · permission checks| API
+    Arena <-->|renders · permission checks| API
+    Dash <-->|transcripts · subscription sync| Bot
+    Dash <-->|support · permissions · renders| API
 
-    %% Dashboard integrations
-    Dash <-->|Transcripts & sync| Bot
-    Dash <-->|Permissions & support| Control
-    Account <-->|Card renders & checkout| API
-    Public -->|stats_* RPCs| Postgres
-    Dash -->|stats_* RPCs| Postgres
-
-    %% Control plane
-    Bot -->|Command registry & checks| Control
-    Arena -->|Command registry & checks| Control
-
-    %% Shared package links
-    Bot -.->|imports| SharedDB
-    Arena -.->|imports| SharedDB
-    Logix -.->|imports| SharedDB
-    API -.->|imports| SharedDB
-    Dash -.->|imports| SharedDB
-
-    %% Storage
-    SharedDB --> Mongo
-    SharedDB --> Postgres
-    Bot <--> Postgres
-    Logix <--> Postgres
-    Bot <--> Redis
-    Arena <--> Redis
-    Logix <--> Redis
-    API <--> Redis
-    Dash <--> Redis
-    Hub <--> Redis
+    %% ─── Everything sits on the shared layer ───
+    Clients --> Shared
+    Services --> Shared
 ```
+
+### Who touches which store
+
+Every service shares one Redis instance and one MongoDB cluster; PostgreSQL is split between the
+`public` warehouse and the Prisma-managed `arena` schema.
+
+| Service | MongoDB | PostgreSQL | Redis |
+|---|---|---|---|
+| 📡 **SHoNgHub** | — | — | Streams, member directory, leader lock |
+| 🤖 **SHoNgBot** | Domain model | Warehouse writes, batched | Relay, caches, staff activity |
+| 🎮 **SHoNgArena** | Domain model | Supabase reads | Relay, GameStats queue — owns the flusher |
+| 📝 **SHoNgLogix** | Three models only | Primary store, mirrored to Oracle | Relay, mirror queue, flags |
+| 🔌 **SHoNgAPI** | Domain model | Arena schema via `@shong/database/sql` | Idempotency, metrics, permission cache |
+| 🖥️ **SHoNgDashboard** | Domain model | `stats_*` RPCs | Rate limits, caches, key browser |
 
 ---
 

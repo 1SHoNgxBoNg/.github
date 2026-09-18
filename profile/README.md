@@ -23,8 +23,7 @@
 
 - [✨ What the Ecosystem Does](#-what-the-ecosystem-does)
 - [🏗️ Projects](#️-projects)
-- [⚡ Architecture](#-architecture)
-- [🔑 How the Pieces Connect](#-how-the-pieces-connect)
+- [⚡ How It Fits Together](#-how-it-fits-together)
 - [⚙️ Tech & Acknowledgments](#️-tech--acknowledgments)
 - [👥 Developers](#-developers)
 - [🤝 Support](#-support)
@@ -45,10 +44,10 @@
 | 🎫 **Tickets & Staff Ops** | Auto-routed support tickets with hosted HTML transcripts, staff activity scoring, and vacation management |
 | 💳 **Subscriptions & Gifts** | Four tiers (Starter, Pro, Elite, Ultimate) driven by Dodo Payments, Ko-fi and Patreon webhooks, with role sync, grace periods, gift codes, and status cards |
 | 🖼️ **Server-Side Rendering** | Every card, chart, and game board is drawn server-side by the API and delivered to Discord as an image |
-| 🛂 **Command Permissions** | One authority for who may run which command, published by the API and edited from the dashboard — the bots ask, they do not decide |
+| 🛂 **Command Permissions** | One authority for who may run which command, edited from the dashboard and applied across every bot |
 | 🎨 **Profiles & Cosmetics** | Badges, frames, backgrounds, effects and colorways over a member-designed profile card layout |
 | 🌍 **Public Site & Member Area** | A bilingual English/Arabic website with leaderboards, pricing and checkout, plus a member area for billing, cosmetics and personal stats |
-| 📊 **Web Administration** | A Next.js admin portal over the whole data layer, with JWT + OTP auth and role-based access control |
+| 📊 **Web Administration** | A Next.js admin portal over the whole data layer, with two-step sign-in and role-based access control |
 
 ---
 
@@ -80,162 +79,91 @@
     </tr>
     <tr>
       <td><a href="https://github.com/1SHoNgxBoNg/SHoNgLogix"><b>📝 SHoNgLogix</b></a></td>
-      <td>Event auditor — captures 32 gateway events into log channels and warehouses them in Postgres, with an Oracle mirror. Also runs OCR scam detection on images</td>
-      <td>discord.js · Postgres · Oracle · Tesseract.js</td>
+      <td>Event auditor — captures 32 gateway events into log channels and keeps the long-term record the statistics are built from. Also runs OCR scam detection on images</td>
+      <td>discord.js · PostgreSQL · Tesseract.js</td>
     </tr>
     <tr>
       <td><a href="https://github.com/1SHoNgxBoNg/SHoNgAPI"><b>🔌 SHoNgAPI</b></a></td>
-      <td>Backend microservice — renders every card and game board, receives the payment webhooks, and serves the command-permission and support control planes</td>
+      <td>Backend microservice — renders every card and game board, handles subscription payments, and answers who may run which command</td>
       <td>NestJS · Fastify · Rust canvas · sharp</td>
     </tr>
     <tr>
       <td><a href="https://github.com/1SHoNgxBoNg/SHoNgDashboard"><b>🖥️ SHoNgDashboard</b></a></td>
-      <td>The web platform — a bilingual public site, a member account area with checkout and cosmetics, and a 34-page admin portal, all behind one edge with three session kinds</td>
+      <td>The web platform — a bilingual public site, a member account area with checkout and cosmetics, and a 34-page admin portal</td>
       <td>Next.js 16 · React 19 · Tailwind v4</td>
     </tr>
     <tr>
       <td><a href="https://github.com/1SHoNgxBoNg/SHoNgDatabase"><b>🗄️ SHoNgDatabase</b></a></td>
-      <td>Shared data layer — Mongoose schemas, economy config, subscription tiers and provider catalogs, command-permission keys, cosmetics, and the game-stats engine, plus a Prisma layer over the Arena SQL warehouse. Imported by all five services above</td>
-      <td>TypeScript · Mongoose · Prisma</td>
+      <td>Shared data layer — schemas, economy configuration, subscription tiers, cosmetics, and the game-statistics engine. Imported by all five services above, so a change lands everywhere at once</td>
+      <td>TypeScript · Mongoose</td>
     </tr>
   </tbody>
 </table>
 
 ---
 
-## ⚡ Architecture
+## ⚡ How It Fits Together
 
-One Discord application holds the privileged intents. Everything else consumes relayed events.
-The system reads top to bottom in four layers: the relay, the bot clients, the services, and the
-shared data layer underneath all of them.
+One Discord application holds the privileged intents; everything else works from relayed events.
+The system reads top to bottom in four layers.
 
 ```mermaid
 flowchart TD
-    %% ─── Ingress ───────────────────────────────────────────────
     Members["👥 Discord Members"]
     Web["🌐 Visitors · Members · Operators"]
     Pay["💳 Dodo Payments · Ko-fi · Patreon"]
 
-    %% ─── 1. Relay ──────────────────────────────────────────────
-    subgraph Relay ["① Gateway Relay — the one privileged connection"]
-        Hub["📡 SHoNgHub<br/>@discordjs/ws · Fastify :3200"]
-        Streams[("Redis Streams<br/>hub:events:*")]
-        Hub -->|XADD| Streams
+    subgraph Relay ["① Gateway Relay"]
+        Hub["📡 SHoNgHub<br/>one privileged connection"]
+        Stream["Event stream"]
+        Hub --> Stream
     end
 
-    %% ─── 2. Bots ───────────────────────────────────────────────
-    subgraph Clients ["② Bot Clients — own tokens · non-privileged intents"]
+    subgraph Clients ["② Bot Clients"]
         direction LR
-        Bot["🤖 SHoNgBot<br/>Fastify :3002"]
+        Bot["🤖 SHoNgBot"]
         Arena["🎮 SHoNgArena"]
         Logix["📝 SHoNgLogix"]
     end
 
-    %% ─── 3. Services ───────────────────────────────────────────
     subgraph Services ["③ Services"]
         direction LR
-        API["🔌 SHoNgAPI — NestJS :5002<br/>rendering · payments<br/>command permissions · support"]
-        Dash["🖥️ SHoNgDashboard — Next.js 16<br/>public site · member area · admin portal"]
+        API["🔌 SHoNgAPI<br/>rendering · payments · permissions"]
+        Dash["🖥️ SHoNgDashboard<br/>public site · member area · admin"]
     end
 
-    %% ─── 4. Data ───────────────────────────────────────────────
-    subgraph Foundation ["④ Shared Data Layer"]
-        Shared["🗄️ @shong/database<br/>schemas · cosmetics · permissions<br/>GameStats · Arena SQL"]
-        Stores[("MongoDB Atlas · PostgreSQL · Redis")]
-        Shared --> Stores
-    end
+    Shared["🗄️ @shong/database — shared data layer"]
 
-    %% ─── Ingress ───
-    Members -->|gateway events| Hub
-    Web -->|HTTPS| Dash
-    Pay -->|webhooks| API
+    Members -->|events| Hub
+    Web -->|web| Dash
+    Pay -->|payments| API
 
-    %% ─── Fan-out ───
-    Streams -->|XREADGROUP| Bot
-    Streams -->|XREADGROUP| Arena
-    Streams -->|XREADGROUP| Logix
-    Hub -.->|message history| Bot
+    Stream --> Bot
+    Stream --> Arena
+    Stream --> Logix
 
-    %% ─── Bots act directly on Discord ───
-    Clients ==>|REST · own token| Members
+    Clients <--> API
+    Bot <--> Dash
+    API <--> Dash
 
-    %% ─── Service traffic ───
-    Bot <-->|renders · permission checks| API
-    Arena <-->|renders · permission checks| API
-    Dash <-->|transcripts · subscription sync| Bot
-    Dash <-->|support · permissions · renders| API
-
-    %% ─── Everything sits on the shared layer ───
     Clients --> Shared
     Services --> Shared
 ```
 
-### Who touches which store
+### The four ideas behind it
 
-Every service shares one Redis instance and one MongoDB cluster; PostgreSQL is split between the
-`public` warehouse and the Prisma-managed `arena` schema.
+**One gateway connection.** Three bots used to open three connections asking Discord for the same
+events. Now a single relay listens once and passes each event on, and every bot still acts on
+Discord under its own identity.
 
-| Service | MongoDB | PostgreSQL | Redis |
-|---|---|---|---|
-| 📡 **SHoNgHub** | — | — | Streams, member directory, leader lock |
-| 🤖 **SHoNgBot** | Domain model | Warehouse writes, batched | Relay, caches, staff activity |
-| 🎮 **SHoNgArena** | Domain model | Supabase reads | Relay, GameStats queue — owns the flusher |
-| 📝 **SHoNgLogix** | Three models only | Primary store, mirrored to Oracle | Relay, mirror queue, flags |
-| 🔌 **SHoNgAPI** | Domain model | Arena schema via `@shong/database/sql` | Idempotency, metrics, permission cache |
-| 🖥️ **SHoNgDashboard** | Domain model | `stats_*` RPCs | Rate limits, caches, key browser |
+**One place that draws.** No bot renders images itself. Every profile card, leaderboard, game board
+and chart is produced by the API, so a design change ships once instead of three times.
 
----
+**One shared data layer.** Schemas, prices, cosmetics and statistics live in a single package that
+every service imports, which is what keeps five codebases telling the same story.
 
-## 🔑 How the Pieces Connect
-
-**SHoNgHub owns the gateway.** Discord intents govern only what the Gateway pushes to a connection —
-they have no bearing on the REST API. So one application holds `MessageContent` and `GuildMembers`,
-normalises each event, and `XADD`s it to a Redis Stream. Each bot reads its own consumer group and
-replays the untouched payload through discord.js's internal actions, so handlers see exactly the
-objects a live gateway would have produced. Interactions never pass through the Hub — they stay
-direct, because they must be acknowledged within three seconds.
-
-All three bots consume the relay. SHoNgLogix subscribes to the widest set — all four message events
-and all three member events — because an auditor that misses an event has failed at its one job.
-
-**SHoNgAPI owns rendering.** No bot draws images in-process. Profile cards, leaderboards, game
-boards, wheel GIFs, and tier cards are all HTTP calls to the API, which renders them with a
-Rust-backed canvas and returns base64 PNGs.
-
-**SHoNgAPI also owns the control planes.** Command permissions and the external support desk are
-served from one place, so the bots, the Arena and the dashboard read one authority instead of three.
-A bot publishes its command registry and asks whether a caller may run a command; it never decides
-for itself. The rollout is staged through a shared namespace and per-guild enforcement flags, so
-enforcement can be switched on one guild at a time and rolled back by changing a value.
-
-**One payment provider at a time.** `PAYMENTS_PROVIDER` decides which processor module the API even
-constructs — no route, no client, no boot check for the other. Paddle is archived rather than
-deleted, so flipping back is one value and a redeploy. Two things are never gated: gift-code
-redemption, because a gift code outlives the provider that sold it, and the Paddle *read* paths in
-the dashboard, because archiving a provider must not strip a paying subscriber of the ability to see
-their invoices or manage their plan.
-
-**@shong/database owns the schema.** It is a `file:` dependency, not a published package, so it must
-be built before any consumer. Every service's local `schema/` or `models/` folder is a thin re-export
-shim over it. It publishes subpaths — `/command-permissions`, `/cosmetics` and `/sql` — that stay
-importable without a Mongoose connection, which is what lets a command registry load one during
-module evaluation.
-
-**One Redis, one Mongo cluster.** All services share both. Redis carries the Hub streams, the member
-directory, caches, rate limits, permission caches, and webhook idempotency keys — each namespaced to
-avoid collisions. PostgreSQL carries two separate things: the `public` warehouse SHoNgLogix fills and
-the dashboard reads, and the `arena` schema that `@shong/database` manages with Prisma.
-
-```text
-/home/ubuntu/shong/
-├── SHoNgDatabase/     # build first — every other project depends on it
-├── SHoNgHub/          # build second — the three bots depend on its packages/
-├── SHoNgAPI/
-├── SHoNgBot/
-├── SHoNgArena/
-├── SHoNgLogix/
-└── SHoNgDashboard/
-```
+**One authority for permissions.** A bot asks whether a caller may run a command; it never decides
+on its own. Server owners manage that from the dashboard, and it applies everywhere.
 
 ---
 
